@@ -1,55 +1,36 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const db=require('./database/db'); // Import MySQL connection
+const express=require('express');
+const app=express();
+const db=require('./models')
+const { sequelize } = require('./models');
+const authRoutes = require('./routes/auth')
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+// const studentRoutes=require('./routes/studentRoutes')
+const userRoutes = require('./routes/userRoutes');
 
-// Middleware
-app.use(bodyParser.json());
 
-// API to Fetch All Students
-app.get("/students", (req, res) => {
-  db.query("SELECT * FROM students", (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(results);
-  });
+
+app.use(express.json()); // for parsing application/json
+app.use('/api', authRoutes);
+
+const studentRoutes = require('./routes/studentDetails');
+app.use('/api', studentRoutes);
+app.use('/users', userRoutes); 
+
+
+app.get('/', (req, res) => {
+  res.send('✅ Backend is working fine!');
 });
-
-// API to Insert a New Student
-app.post("/students", (req, res) => {
-  const {
-    college_name,
-    registration_no,
-    roll_no,
-    name,
-    father_name,
-    mother_name,
-    course,
-    dob,
-    total_marks,
-    marks_obtained,
-    session
-  } = req.body;
-
-  const sql = `INSERT INTO students 
-    (college_name, registration_no, roll_no, name, father_name, mother_name, course, dob, total_marks, marks_obtained, session) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-  db.query(sql, 
-    [college_name, registration_no, roll_no, name, father_name, mother_name, course, dob, total_marks, marks_obtained, session],
-    (err, result) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
-      res.json({ message: "Student Added!", studentId: result.insertId });
-    }
-  );
-});
-
+// app.get('/',(res,req)=>{
+//   res.json("Welcome to the API")
+// })
 // Start Server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} 🚀`);
+app.listen(3000, async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('MySQL DB Connected');
+    console.log('Server running at http://localhost:3000');
+  } catch (error) {
+    console.error('Unable to connect to DB:', error);
+  }
 });
+
