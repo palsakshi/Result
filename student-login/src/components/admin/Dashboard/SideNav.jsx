@@ -8,18 +8,17 @@ const Sidebar = () => {
       style={{ width: "250px", minHeight: "100vh" }}
     >
       <Link
-        to="/dashboard"
         className="d-flex align-items-center pb-3 mb-3 text-white text-decoration-none border-bottom"
       >
         <span className="fs-5">Menu</span>
       </Link>
 
       <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to="/dashboard" className="nav-link text-white">
             Dashboard
           </Link>
-        </li>
+        </li> */}
 
         <li>
           <Link to="/dashboard/formshow" className="nav-link text-white">
