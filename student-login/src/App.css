@@ -1,0 +1,40 @@
+.filed{
+    border:2px solid Grey;
+    margin-top:20px;
+    width:85%;
+  }
+   body{
+    background: lightcyan;
+  }
+  .table{
+    background:#fff;
+    margin:2px !important;
+    width:99.7% !important;
+  }
+  
+  .col-left{
+    width:20%;
+  
+  }
+  .table-bordered>:not(caption)>*>* {
+    border-width: 0 var(--bs-border-width);
+    color: blue;
+  }
+  .btn-1{
+    background:lightgray;
+    padding:5px !important;
+    color:black !important;
+    font-size:13px !important;
+  }
+  
+  .filed h2{
+    padding-left:6px;
+    font-size:24px !important;
+  }
+  
+  @media(max-width:425px){
+    .col-left{
+      width:30%;
+    
+    }
+  }
