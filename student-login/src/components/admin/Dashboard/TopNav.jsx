@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         {/* Navbar brand */}
-        <Link className="navbar-brand" to="/">Navbar</Link>
+        <Link className="navbar-brand">Navbar</Link>
 
         {/* Toggle button */}
         <button
@@ -24,12 +24,10 @@ const Navbar = () => {
 
         {/* Collapsible wrapper */}
         <div className="d-flex ms-3 gap-2">
-  {/* <button className="btn btn-success" type="button">
-    Result
-  </button> */}
-  <button className="btn btn-danger" type="button">
-    Add
-  </button>
+ 
+        <Link to="/dashboard/formshow" className="btn btn-danger">
+            Add
+          </Link>
 </div>
       </div>
     </nav>

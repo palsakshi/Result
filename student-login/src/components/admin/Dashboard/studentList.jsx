@@ -6,7 +6,7 @@ const StudentList = () => {
 
   const fetchRecords = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/students');
+      const res = await axios.get('http://localhost:3000/api/all-students');
       setStudents(res.data);
     } catch (error) {
       console.error('Error fetching student data:', error);

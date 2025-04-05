@@ -23,7 +23,7 @@ const StudentForm = ({ onAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/students/add', formData);
+      await axios.post('http://localhost:3000/api/add-student', formData);
       alert('Record added successfully!');
       if (onAdd) onAdd();
       setFormData({

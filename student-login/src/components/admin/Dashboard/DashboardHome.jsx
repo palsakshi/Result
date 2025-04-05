@@ -5,11 +5,11 @@ import { Outlet } from 'react-router-dom';
 
 function DashboardHome() {
   return (
-    <div>
+    <div  style={{ height: '100vh', overflow: 'hidden' }}>
       <Navbar/>
-      <div className="d-flex justify-content-start g-0 ">
+      <div className="d-flex" style={{ height: 'calc(100vh - 56px)' }}>
         <Sidebar />
-        <main className="p-4 w-100" >
+        <main className="p-4 w-100" style={{ overflowY: 'auto' }} >
         <Outlet />
       </main>  
       </div>
