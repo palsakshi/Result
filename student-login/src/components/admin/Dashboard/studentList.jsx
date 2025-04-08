@@ -1,0 +1,154 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import DataTable from 'react-data-table-component';
+import baseURL from '../../../baseURL';
+
+const StudentList = () => {
+  const [students, setStudents] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const [editData, setEditData] = useState({});
+
+  useEffect(() => {
+    fetchRecords();
+  }, []);
+
+  const fetchRecords = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/api/all-students`);
+      setStudents(res.data);
+    } catch (error) {
+      console.error('Error fetching student data:', error);
+    }
+  };
+
+  const handleEditClick = (student) => {
+    setEditId(student.id);
+    setEditData({ ...student });
+  };
+
+  const handleCancelEdit = () => {
+    setEditId(null);
+    setEditData({});
+  };
+
+  const handleInputChange = (e) => {
+    setEditData({
+      ...editData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSave = async (id) => {
+    try {
+      await axios.put(`${baseURL}/api/update-student/${id}`, editData);
+      setEditId(null);
+      fetchRecords();
+    } catch (error) {
+      console.error('Error updating student:', error);
+    }
+  };
+
+  const deleteStudent = async (id) => {
+    if (window.confirm('Are you sure you want to delete this student?')) {
+      try {
+        await axios.delete(`${baseURL}/api/delete-student/${id}`);
+        setStudents(students.filter((stu) => stu.id !== id));
+      } catch (error) {
+        console.error('Error deleting student:', error);
+      }
+    }
+  };
+
+  const columns = [
+    {
+      name: 'Name',
+      selector: row => editId === row.id ? (
+        <input type="text" name="candidateName" value={editData.candidateName} onChange={handleInputChange} />
+      ) : row.candidateName,
+      sortable: true,
+    },
+    {
+      name: 'Roll No',
+      selector: row => editId === row.id ? (
+        <input type="text" name="rollNo" value={editData.rollNo} onChange={handleInputChange} />
+      ) : row.rollNo,
+      sortable: true,
+    },
+    {
+      name: 'Reg. No',
+      selector: row => row.registrationNo,
+      sortable: true,
+    },
+    {
+      name: 'Course',
+      selector: row => editId === row.id ? (
+        <input type="text" name="course" value={editData.course} onChange={handleInputChange} />
+      ) : row.course,
+    },
+    {
+      name: 'Marks',
+      selector: row => editId === row.id ? (
+        <>
+          <input
+            type="number"
+            name="marksObtained"
+            value={editData.marksObtained}
+            onChange={handleInputChange}
+            style={{ width: "40%" }}
+          />
+          /
+          <input
+            type="number"
+            name="totalMarks"
+            value={editData.totalMarks}
+            onChange={handleInputChange}
+            style={{ width: "40%" }}
+          />
+        </>
+      ) : `${row.marksObtained}/${row.totalMarks}`,
+    },
+    {
+      name: 'DOB',
+      selector: row => editId === row.id ? (
+        <input type="date" name="dob" value={editData.dob} onChange={handleInputChange} />
+      ) : row.dob,
+    },
+    {
+      name: 'Session',
+      selector: row => editId === row.id ? (
+        <input type="text" name="session" value={editData.session} onChange={handleInputChange} />
+      ) : row.session,
+    },
+    {
+      name: 'Actions',
+      cell: row => editId === row.id ? (
+        <>
+          <button className="btn btn-sm btn-success me-2" onClick={() => handleSave(row.id)}>Save</button>
+          <button className="btn btn-sm btn-secondary" onClick={handleCancelEdit}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <button className="btn btn-sm btn-primary me-2" onClick={() => handleEditClick(row)}>Edit</button>
+          <button className="btn btn-sm btn-danger" onClick={() => deleteStudent(row.id)}>Delete</button>
+        </>
+      )
+    }
+  ];
+
+  return (
+    <div className="container mt-5">
+      <h3 className="text-center mb-4">All Student Records</h3>
+      <DataTable
+        columns={columns}
+        data={students}
+        pagination
+        highlightOnHover
+        striped
+        responsive
+        persistTableHead
+      />
+    </div>
+  );
+};
+
+export default StudentList;
