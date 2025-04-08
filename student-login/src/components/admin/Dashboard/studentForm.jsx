@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import baseURL from '../../../baseURL';
 
@@ -15,8 +15,11 @@ const StudentForm = ({ onAdd }) => {
     totalMarks: '',
     marksObtained: '',
     session: '',
-    photo: null
+    photo: null,
+    documents: [] // ✅ new field for multiple files
   });
+  const photoRef = useRef(null);
+  const documentsRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,10 +29,19 @@ const StudentForm = ({ onAdd }) => {
     e.preventDefault();
 
     const form = new FormData();
+
     for (let key in formData) {
-      form.append(key, formData[key]);
+      if (key === 'documents') {
+        // ✅ Append each document file
+        formData.documents.forEach((file) => {
+          form.append('documents', file);
+        });
+      } else {
+        form.append(key, formData[key]);
+      }
     }
-console.log(formData);
+
+    console.log(formData);
     try {
       await axios.post(`${baseURL}/api/add-student`, form, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -38,7 +50,7 @@ console.log(formData);
       alert('Record added successfully!');
       if (onAdd) onAdd();
 
-      // reset form
+      // ✅ reset form
       setFormData({
         collegeName: '',
         registrationNo: '',
@@ -51,9 +63,11 @@ console.log(formData);
         totalMarks: '',
         marksObtained: '',
         session: '',
-        photo: null
+        photo: null,
+        documents: []
       });
-
+      photoRef.current.value = null;
+      documentsRef.current.value = null;
     } catch (err) {
       alert('Error: ' + (err?.response?.data?.error || 'Something went wrong'));
     }
@@ -64,24 +78,29 @@ console.log(formData);
       <h3 className="text-center mb-4">Student Result Form</h3>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
 
-        {/* 👇 Correct File Upload Field */}
+        {/* 👇 Student Photo Upload */}
         <div className="mb-4">
           <label className="form-label">Upload Student Photo</label>
           <input
-            type="file" name="photo"
+            type="file"
+            name="photo"
             accept="image/*"
+            ref={photoRef}
             onChange={(e) =>
               setFormData({ ...formData, photo: e.target.files[0] })
             }
             className="form-control"
             required
           />
+
         </div>
 
+      
+
+        {/* ✅ Student Info Inputs */}
         <div className="row">
           {Object.entries(formData).map(([key, value]) => {
-            // 🛑 Skip the 'photo' field here
-            if (key === 'photo') return null;
+            if (key === 'photo' || key === 'documents') return null;
 
             return (
               <div className="col-md-6 mb-3" key={key}>
@@ -103,11 +122,28 @@ console.log(formData);
                   }
                   required
                 />
+
+
               </div>
+              
             );
           })}
         </div>
-
+   {/* ✅ New Multiple File Upload */}
+   <div className="mb-2">
+          <label className="form-label">Upload Documents</label>
+          <input
+            type="file"
+            name="documents"
+            ref={documentsRef} 
+            accept=".pdf"
+            multiple
+            onChange={(e) =>
+              setFormData({ ...formData, documents: Array.from(e.target.files) })
+            }
+            className="form-control"
+          />
+        </div>
         <div className="text-center">
           <button className="btn btn-primary px-5 mt-3" type="submit">
             Submit

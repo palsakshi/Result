@@ -13,7 +13,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       registrationNo: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       rollNo: {
         type: Sequelize.STRING

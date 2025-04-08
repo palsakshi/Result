@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { student_details } = require('../models');
+const { student_details , studentdocuments} = require('../models');
 const multer = require('multer');
 
 
@@ -9,7 +9,7 @@ const multer = require('multer');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'), // folder to store images
   filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + file.originalname;
+    const uniqueName =  file.originalname;
     cb(null, uniqueName);
   }
 });
@@ -18,7 +18,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 // ➕ Add a student
-router.post('/add-student', upload.single('photo'), async (req, res) => {
+router.post('/add-student',  upload.fields([
+  { name: 'photo', maxCount: 1 },
+  { name: 'documents', maxCount: 10 }
+]),
+
+async (req, res) => {
   try {
     const {
       collegeName, registrationNo, rollNo, candidateName,
@@ -26,7 +31,7 @@ router.post('/add-student', upload.single('photo'), async (req, res) => {
       marksObtained, session
     } = req.body;
 
-    const photo = req.file ? req.file.filename : null;
+    const photo = req.files['photo'] ? req.files['photo'][0].filename : null;
     
     const student = await student_details.create({
       collegeName,
@@ -43,6 +48,16 @@ router.post('/add-student', upload.single('photo'), async (req, res) => {
       photo
     });
 
+      // 2️⃣ Store Documents if uploaded
+      if (req.files['documents']) {
+        const documentRecords = req.files['documents'].map(doc => ({
+          registrationNo,
+          filePath: doc.filename
+        }));
+  
+        await studentdocuments.bulkCreate(documentRecords);
+      }
+
     res.status(201).json(student);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -52,7 +67,6 @@ router.post('/add-student', upload.single('photo'), async (req, res) => {
 // 📥 Get all students
 router.get('/all-students', async (req, res) => {
   try {
-
     const students = await student_details.findAll();
     res.status(200).json(students);
   } catch (err) {
@@ -63,7 +77,14 @@ router.get('/all-students', async (req, res) => {
 router.get('/all-students/:regNo', async (req, res) => {
   const { regNo } = req.params;
 
-  const student = await student_details.findOne({ where: { registrationNo: regNo } });
+
+  const student = await student_details.findOne({ where: { registrationNo: regNo },
+    include: [{
+      model: studentdocuments,
+      as: 'documents' // this must match your association alias
+    }]
+
+  });
 console.log(student);
   res.status(200).json(student); // This sends JSON data back to the frontend
 });

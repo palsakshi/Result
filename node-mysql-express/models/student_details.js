@@ -10,12 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+       // ✅ One student has many documents
+       student_details.hasMany(models.studentdocuments, {
+        foreignKey: 'registrationNo',
+        sourceKey: 'registrationNo',
+        as: 'documents'
+      });
     }
   }
   student_details.init({
     collegeName: DataTypes.STRING,
-    registrationNo: DataTypes.STRING,
+    registrationNo: {
+      type: DataTypes.STRING,
+      unique: true, // ✅ make it unique
+      allowNull: false
+    },
     rollNo: DataTypes.STRING,
     candidateName: DataTypes.STRING,
     fatherName: DataTypes.STRING,
