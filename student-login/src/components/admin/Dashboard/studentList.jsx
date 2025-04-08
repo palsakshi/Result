@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import DataTable from 'react-data-table-component';
 import baseURL from '../../../baseURL';
 
 const StudentList = () => {
@@ -22,7 +23,7 @@ const StudentList = () => {
 
   const handleEditClick = (student) => {
     setEditId(student.id);
-    setEditData({ ...student }); // fill current data into state
+    setEditData({ ...student });
   };
 
   const handleCancelEdit = () => {
@@ -41,7 +42,7 @@ const StudentList = () => {
     try {
       await axios.put(`${baseURL}/api/update-student/${id}`, editData);
       setEditId(null);
-      fetchRecords(); // Refresh the list after update
+      fetchRecords();
     } catch (error) {
       console.error('Error updating student:', error);
     }
@@ -58,156 +59,94 @@ const StudentList = () => {
     }
   };
 
+  const columns = [
+    {
+      name: 'Name',
+      selector: row => editId === row.id ? (
+        <input type="text" name="candidateName" value={editData.candidateName} onChange={handleInputChange} />
+      ) : row.candidateName,
+      sortable: true,
+    },
+    {
+      name: 'Roll No',
+      selector: row => editId === row.id ? (
+        <input type="text" name="rollNo" value={editData.rollNo} onChange={handleInputChange} />
+      ) : row.rollNo,
+      sortable: true,
+    },
+    {
+      name: 'Reg. No',
+      selector: row => row.registrationNo,
+      sortable: true,
+    },
+    {
+      name: 'Course',
+      selector: row => editId === row.id ? (
+        <input type="text" name="course" value={editData.course} onChange={handleInputChange} />
+      ) : row.course,
+    },
+    {
+      name: 'Marks',
+      selector: row => editId === row.id ? (
+        <>
+          <input
+            type="number"
+            name="marksObtained"
+            value={editData.marksObtained}
+            onChange={handleInputChange}
+            style={{ width: "40%" }}
+          />
+          /
+          <input
+            type="number"
+            name="totalMarks"
+            value={editData.totalMarks}
+            onChange={handleInputChange}
+            style={{ width: "40%" }}
+          />
+        </>
+      ) : `${row.marksObtained}/${row.totalMarks}`,
+    },
+    {
+      name: 'DOB',
+      selector: row => editId === row.id ? (
+        <input type="date" name="dob" value={editData.dob} onChange={handleInputChange} />
+      ) : row.dob,
+    },
+    {
+      name: 'Session',
+      selector: row => editId === row.id ? (
+        <input type="text" name="session" value={editData.session} onChange={handleInputChange} />
+      ) : row.session,
+    },
+    {
+      name: 'Actions',
+      cell: row => editId === row.id ? (
+        <>
+          <button className="btn btn-sm btn-success me-2" onClick={() => handleSave(row.id)}>Save</button>
+          <button className="btn btn-sm btn-secondary" onClick={handleCancelEdit}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <button className="btn btn-sm btn-primary me-2" onClick={() => handleEditClick(row)}>Edit</button>
+          <button className="btn btn-sm btn-danger" onClick={() => deleteStudent(row.id)}>Delete</button>
+        </>
+      )
+    }
+  ];
+
   return (
     <div className="container mt-5">
       <h3 className="text-center mb-4">All Student Records</h3>
-      <div className="table-responsive">
-        <table className="table table-striped table-bordered table-hover">
-          <thead className="table-primary">
-            <tr>
-              <th>Name</th>
-              <th>Roll No</th>
-              <th>Reg. No</th>
-              <th>Course</th>
-              <th>Marks</th>
-              <th>DOB</th>
-              <th>Session</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.length === 0 ? (
-              <tr>
-                <td colSpan="8" className="text-center py-4 text-muted">
-                  No student records found.
-                </td>
-              </tr>
-            ) : (
-              students.map((stu) => (
-                <tr key={stu.id}>
-                  <td>
-                    {editId === stu.id ? (
-                      <input
-                        type="text"
-                        name="candidateName"
-                        value={editData.candidateName}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      stu.candidateName
-                    )}
-                  </td>
-                  <td>
-                    {editId === stu.id ? (
-                      <input
-                        type="text"
-                        name="rollNo"
-                        value={editData.rollNo}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      stu.rollNo
-                    )}
-                  </td>
-                  <td>{stu.registrationNo}</td> {/* Reg. No should remain fixed */}
-                  <td>
-                    {editId === stu.id ? (
-                      <input
-                        type="text"
-                        name="course"
-                        value={editData.course}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      stu.course
-                    )}
-                  </td>
-                  <td>
-                    {editId === stu.id ? (
-                      <>
-                        <input
-                          type="number"
-                          name="marksObtained"
-                          value={editData.marksObtained}
-                          onChange={handleInputChange}
-                          style={{ width: "45%" }}
-                        />
-                        /
-                        <input
-                          type="number"
-                          name="totalMarks"
-                          value={editData.totalMarks}
-                          onChange={handleInputChange}
-                          style={{ width: "45%" }}
-                        />
-                      </>
-                    ) : (
-                     `${stu.marksObtained}/${stu.totalMarks}`
-                    )}
-                  </td>
-                  <td>
-                    {editId === stu.id ? (
-                      <input
-                        type="date"
-                        name="dob"
-                        value={editData.dob}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      stu.dob
-                    )}
-                  </td>
-                  <td>
-                    {editId === stu.id ? (
-                      <input
-                        type="text"
-                        name="session"
-                        value={editData.session}
-                        onChange={handleInputChange}
-                      />
-                    ) : (
-                      stu.session
-                    )}
-                  </td>
-                  <td>
-                    {editId === stu.id ? (
-                      <>
-                        <button
-                          className="btn btn-sm btn-success me-2"
-                          onClick={() => handleSave(stu.id)}
-                        >
-                          Save
-                        </button>
-                        <button
-                          className="btn btn-sm btn-secondary"
-                          onClick={handleCancelEdit}
-                        >
-                          Cancel
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          className="btn btn-sm btn-primary me-2"
-                          onClick={() => handleEditClick(stu)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-sm btn-danger"
-                          onClick={() => deleteStudent(stu.id)}
-                        >
-                          Delete
-                        </button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        columns={columns}
+        data={students}
+        pagination
+        highlightOnHover
+        striped
+        responsive
+        persistTableHead
+      />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import myImage from '../assets/img/stu1.jpg';
 import myLogo from "../assets/img/logo.jpg";
+import { jsPDF } from "jspdf";
 
 const UserInfo = () => {
   const [student, setStudent] = useState(null);
@@ -13,8 +14,9 @@ const UserInfo = () => {
   }, []);
 
   const handleDownload = (type) => {
-    // Placeholder function - Add your PDF download logic here
-    alert(`Downloading ${type}`);
+    const doc = new jsPDF();
+    doc.text(`This is content for ${type}`, 10, 10); // You can customize this text or add HTML content
+    doc.save(`${type}.pdf`); // Download the file with a dynamic name like pdf1.pdf
   };
 
   if (!student) {
@@ -39,7 +41,7 @@ const UserInfo = () => {
 
     <div className="container mt-4 text-center">
       <img
-        src={`http://localhost:3000/api/uploads/${student.photo}`}
+        src={`http://localhost:3000/uploads/${student.photo}`}
         className="img-thumbnail rounded float-left"
         style={{ width: "20%", height: "2%", float: "right" }}
         alt="..."
@@ -71,11 +73,11 @@ const UserInfo = () => {
           View Your DMC
         </a>
         <button className="btn btn-success me-2" onClick={() => handleDownload("pdf1")}>
-          Download PDF 1
+          Download PDF
         </button>
-        <button className="btn btn-success" onClick={() => handleDownload("pdf2")}>
+        {/* <button className="btn btn-success" onClick={() => handleDownload("pdf2")}>
           Download PDF 2
-        </button>
+        </button> */}
       </div>
     </div>
     </div>
