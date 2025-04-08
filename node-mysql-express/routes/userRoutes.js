@@ -1,27 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require('../models');
 
-// POST - Create user
-router.post('/add', async (req, res) => {
-  try {
-    const { first_name, last_name, email, password, token } = req.body;
-    const user = await User.create({ first_name, last_name, email, password, token });
-    res.status(201).json(user);
-  } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// 🔐 Hardcoded Admin Credentials
+const ADMIN_EMAIL = 'admin@example.com';
+const ADMIN_PASSWORD = 'admin123'; // You can make this more secure later
 
-// GET - All users
-router.get('/', async (req, res) => {
+// Admin Login Route
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const users = await User.findAll();
-    res.status(200).json(users);
-  } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ error: 'Internal server error' });
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      res.status(200).json({ message: 'Admin login successful', email });
+    } else {
+      res.status(401).json({ error: 'Invalid admin credentials' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
   }
 });
 

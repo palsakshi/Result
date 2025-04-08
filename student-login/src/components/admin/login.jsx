@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import "./login.css";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import baseURL from '../../baseURL';
 
 function Login() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: ''
   });
@@ -20,7 +19,7 @@ function Login() {
   const handleLogin = async () => {
     try {
       // You can replace this URL with your actual API endpoint
-      const res = await axios.post('http://localhost:3000/api/login', formData);
+      const res = await axios.post(`${baseURL}/api/login`, formData);
       console.log('Login success:', res.data);
       alert('Login successful!');
       navigate('/dashboard');
@@ -43,31 +42,6 @@ function Login() {
           </div>
           <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form>
-              <div className="form-outline mb-3">
-                <label className="form-label" htmlFor="firstName">First Name</label>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  className="form-control form-control-lg"
-                  placeholder="Enter first name"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-outline mb-3">
-                <label className="form-label" htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  className="form-control form-control-lg"
-                  placeholder="Enter last name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                />
-              </div>
 
               <div className="form-outline mb-3">
                 <label className="form-label" htmlFor="email">Email address</label>

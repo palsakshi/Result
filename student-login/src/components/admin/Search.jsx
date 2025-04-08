@@ -1,7 +1,9 @@
+// import axios from "axios";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import myLogo from "../assets/img/logo.jpg";
+import myLogo from "../../assets/img/logo.jpg";
+import baseURL from "../../baseURL";
 
 const Search = () => {
   const [regNo, setRegNo] = useState("");
@@ -14,13 +16,20 @@ const Search = () => {
     }
 
     try {
-      const res = await axios.get(`http://localhost:5000/students/${regNo}`);
+      const res = await axios.get(`${baseURL}/api/all-students/${regNo}`);
+      
+      // console.log('fki');
+      // const res = await axios.get(`${baseURL}/api/all-students/${regNo}`);
+      // console.log(res.data);
       
       if (res.data) {
         // Store the result in localStorage
-        localStorage.setItem("studentData", JSON.stringify(res.data));
-        // Navigate to user info page
+        // localStorage.setItem("studentData", JSON.stringify(res.data));
+        
+        localStorage.setItem("studentInfo", JSON.stringify(res.data));
+
         navigate("/userInfo");
+
       } else {
         alert("Student not found");
       }

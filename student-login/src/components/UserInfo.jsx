@@ -39,9 +39,9 @@ const UserInfo = () => {
 
     <div className="container mt-4 text-center">
       <img
-        src={myImage}
+        src={`http://localhost:3000/api/uploads/${student.photo}`}
         className="img-thumbnail rounded float-left"
-        style={{ width: "10%", height: "5%", float: "right" }}
+        style={{ width: "20%", height: "2%", float: "right" }}
         alt="..."
       />
 

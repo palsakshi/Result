@@ -25,7 +25,7 @@ const Navbar = () => {
         {/* Collapsible wrapper */}
         <div className="d-flex ms-3 gap-2">
  
-        <Link to="/dashboard/formshow" className="btn btn-danger">
+        <Link to="/dashboard/formshow" className="btn btn-success">
             Add
           </Link>
 </div>

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { user_table } = require('../models'); // Sequelize model
+// const { user_table } = require('../models'); // Sequelize model
+const userlogin = require('../models/userlogin');
 
 // 🔐 Admin Login Only
 router.post('/login', async (req, res) => {
@@ -8,7 +9,7 @@ router.post('/login', async (req, res) => {
 
   try {
     // ✅ Find admin by email
-    const admin = await user_table.findOne({ where: { email } });
+    const admin = await userlogin.findOne({ where: { email } });
 
     // ❌ Invalid email or password
     if (!admin || admin.password !== password) {
@@ -20,9 +21,8 @@ router.post('/login', async (req, res) => {
       message: 'Admin login successful',
       admin: {
         id: admin.id,
-        first_name: admin.first_name,
-        last_name: admin.last_name,
-        email: admin.email
+        email: admin.email,
+        password:admin.password
         // Avoid sending password back
       }
     });

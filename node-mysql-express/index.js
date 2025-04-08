@@ -1,29 +1,41 @@
-const express=require('express');
-const app=express();
-const db=require('./models')
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const db = require('./models');
 const { sequelize } = require('./models');
-const authRoutes = require('./routes/auth')
 
-// const studentRoutes=require('./routes/studentRoutes')
-const userRoutes = require('./routes/userRoutes');
-
-
-
-app.use(express.json()); // for parsing application/json
-app.use('/api', authRoutes);
-
+// const authRoutes = require('./routes/auth');
+// const userRoutes = require('./routes/userRoutes');
 const studentRoutes = require('./routes/studentDetails');
+const userLogin = require('./routes/userRoutes')
+
+// ✅ CORS Setup
+// app.use(cors({
+//   origin: 'http://localhost:5174', // 👈 Use your frontend URL
+//   credentials: true // only needed if you're using cookies/auth tokens
+// }));
+
+
+
+
+app.use('/uploads', express.static('uploads'));
+// ✅ Middleware
+app.use(express.json()); // for parsing application/json
+app.use(cors());
+// ✅ Routes
+// app.use('/api', authRoutes);
 app.use('/api', studentRoutes);
-app.use('/users', userRoutes); 
+app.use('/api', userLogin);
+// app.use('/users', userRoutes); 
 
 
 app.get('/', (req, res) => {
   res.send('✅ Backend is working fine!');
 });
-// app.get('/',(res,req)=>{
-//   res.json("Welcome to the API")
-// })
-// Start Server
+
+
+
+// ✅ Start Server
 app.listen(3000, async () => {
   try {
     await sequelize.authenticate();
@@ -33,4 +45,3 @@ app.listen(3000, async () => {
     console.error('Unable to connect to DB:', error);
   }
 });
-

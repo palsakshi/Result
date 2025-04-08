@@ -3,7 +3,7 @@ import {Route,BrowserRouter as Router, Routes, useLocation,} from "react-router-
 
 import "./App.css";
 // import Navbar from "./components/Navbar";
-import Search from "./components/Search";
+import Search from "./components/admin/Search";
 import UserInfo from "./components/UserInfo";
 import Login from "./components/admin/login";
 import Dashboard from "./components/admin/Dashboard/DashboardHome";
@@ -27,7 +27,7 @@ function AppWrapper() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Search />} />
-        <Route path="/user" element={<UserInfo />} />
+        <Route path="/userInfo" element={<UserInfo />} />
       </Routes>
     </>
   );
