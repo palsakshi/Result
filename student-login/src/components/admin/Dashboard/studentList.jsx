@@ -61,6 +61,25 @@ const StudentList = () => {
 
   const columns = [
     {
+      name: 'Photo',
+      selector: row => editId === row.id ? (
+        <input
+          type="file"
+          name="photo"
+          accept="image/*"
+          onChange={(e) =>
+            setEditData({ ...editData, photo: e.target.files[0] })
+          }
+        />
+      ) : (
+        <img
+          src={`http://localhost:3000/uploads/${row.photo}`}
+          alt="student"
+          style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '50%' }}
+        />
+      )
+    },
+    {
       name: 'Name',
       selector: row => editId === row.id ? (
         <input type="text" name="candidateName" value={editData.candidateName} onChange={handleInputChange} />
@@ -69,9 +88,7 @@ const StudentList = () => {
     },
     {
       name: 'Roll No',
-      selector: row => editId === row.id ? (
-        <input type="text" name="rollNo" value={editData.rollNo} onChange={handleInputChange} />
-      ) : row.rollNo,
+      selector: row => row.rollNo,
       sortable: true,
     },
     {
@@ -81,9 +98,9 @@ const StudentList = () => {
     },
     {
       name: 'Course',
-      selector: row => editId === row.id ? (
-        <input type="text" name="course" value={editData.course} onChange={handleInputChange} />
-      ) : row.course,
+      selector: row => row.course ,
+      sortable: true,
+     
     },
     {
       name: 'Marks',
@@ -115,9 +132,8 @@ const StudentList = () => {
     },
     {
       name: 'Session',
-      selector: row => editId === row.id ? (
-        <input type="text" name="session" value={editData.session} onChange={handleInputChange} />
-      ) : row.session,
+      selector: row =>  row.session,
+      sortable: true,
     },
     {
       name: 'Actions',

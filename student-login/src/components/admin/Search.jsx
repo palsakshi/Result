@@ -25,7 +25,7 @@ const Search = () => {
       if (res.data) {
         // Store the result in localStorage
         // localStorage.setItem("studentData", JSON.stringify(res.data));
-        
+        console.log(res.data);
         localStorage.setItem("studentInfo", JSON.stringify(res.data));
 
         navigate("/userInfo");
