@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import baseURL from '../../../baseURL';
+import { useNavigate } from 'react-router-dom';
+
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({});
-
+ const Navigate = useNavigate();
   useEffect(() => {
     fetchRecords();
   }, []);
@@ -24,6 +26,7 @@ const StudentList = () => {
   const handleEditClick = (student) => {
     setEditId(student.id);
     setEditData({ ...student });
+    Navigate(`/editStudent/${student.id}`);
   };
 
   const handleCancelEdit = () => {

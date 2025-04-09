@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import myImage from '../assets/img/stu1.jpg';
 import myLogo from "../assets/img/logo.jpg";
-import { jsPDF } from "jspdf";
 
 const UserInfo = () => {
   const [student, setStudent] = useState(null);
@@ -12,75 +10,87 @@ const UserInfo = () => {
       setStudent(JSON.parse(storedData));
     }
   }, []);
-
-  const handleDownload = (type) => {
-    const doc = new jsPDF();
-    doc.text(`This is content for ${type}`, 10, 10); // You can customize this text or add HTML content
-    doc.save(`${type}.pdf`); // Download the file with a dynamic name like pdf1.pdf
-  };
-
+console.log(student);
   if (!student) {
     return (
-    <>
-    <div className="container d-flex flex-column justify-content-center align-items-center ">
-    <div className="img_div">
-              <img src={myLogo} alt="logo text" />
-            </div>
-     <div className="text-center mt-5">No student data found.</div>;
-     </div>
-     </>
-     )
+      <div className="container d-flex flex-column justify-content-center align-items-center ">
+        <div className="img_div">
+          <img src={myLogo} alt="logo text" />
+        </div>
+        <div className="text-center mt-5">No student data found.</div>
+      </div>
+    );
   }
 
   return (
     <>
-      <div className="container d-flex flex-column justify-content-center align-items-center ">
-    <div className="img_div">
-              <img src={myLogo} alt="logo text" />
+      <div className="container d-flex flex-column justify-content-center align-items-center">
+        <div className="img_div">
+          <img src={myLogo} alt="logo text" />
+        </div>
+
+        <div className="container  text-center">
+       <div style={{ width: "30%", height: "30%",float: "right",overflow: "hidden"  }}>
+          <img
+            src={`http://localhost:3000/uploads/${student.photo}`}
+            className="img-thumbnail rounded "
+            style={{ width: "30%", float: "right", height:"30%", objectFit:"contain" }}
+            alt="Student"
+          />
+</div>
+          <table className="table table-bordered table-striped mt-3">
+            <tbody className="text-start">
+              <tr><td>College/Institute Name:</td><td>{student.collegeName}</td></tr>
+              <tr><td>Registration No.</td><td>{student.registrationNo}</td></tr>
+              <tr><td>Roll No.</td><td>{student.rollNo}</td></tr>
+              <tr><td>Name of Candidate:</td><td>{student.candidateName}</td></tr>
+              <tr><td>Father's Name:</td><td>{student.fatherName}</td></tr>
+              <tr><td>Mother's Name:</td><td>{student.motherName}</td></tr>
+              <tr><td>Course:</td><td>{student.course}</td></tr>
+              <tr><td>Date of Birth:</td><td>{student.dob}</td></tr>
+              <tr><td>Total Marks:</td><td>{student.totalMarks}</td></tr>
+              <tr><td>Marks Obtained:</td><td>{student.marksObtained}</td></tr>
+              <tr><td>Session:</td><td>{student.session}</td></tr>
+            </tbody>
+          </table>
+
+          {/* Marksheet Download Section */}
+          <div className="container mt-4 mb-4">
+            <div className="card">
+              <div className="card-header bg-white text-primary fw-bold">
+                Download Marksheets
+              </div>
+              <div className="card-body p-0">
+                <table className="table mb-0 table-bordered">
+                  <tbody>
+                    {student.documents && student.documents.length > 0 ? (
+                      student.documents.map((doc, index) => (
+                        <tr key={index}>
+                          <td>Marksheet {index + 1}</td>
+                          <td>
+                            <a
+                              href={`http://localhost:3000/uploads/${doc.filePath}`}
+                              className="text-primary fw-semibold"
+                              download
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Download
+                            </a>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr><td colSpan="2">No marksheets found.</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
+          </div>
 
-    <div className="container mt-4 text-center">
-      <img
-        src={`http://localhost:3000/uploads/${student.photo}`}
-        className="img-thumbnail rounded float-left"
-        style={{ width: "20%", height: "2%", float: "right" }}
-        alt="..."
-      />
-
-      <table className="table table-bordered table-striped">
-        <tbody className="text-start">
-          <tr><td>College/Institute Name:</td><td>{student.collegeName}</td></tr>
-          <tr><td>Registration No.</td><td>{student.registrationNo}</td></tr>
-          <tr><td>Roll no.</td><td>{student.rollNo}</td></tr>
-          <tr><td>Name of Candidate:</td><td>{student.candidateName}</td></tr>
-          <tr><td>Father's Name:</td><td>{student.fatherName}</td></tr>
-          <tr><td>Mother's Name:</td><td>{student.motherName}</td></tr>
-          <tr><td>Course:</td><td>{student.course}</td></tr>
-          <tr><td>Date of Birth:</td><td>{student.dob}</td></tr>
-          <tr><td>Total Marks:</td><td>{student.totalMarks}</td></tr>
-          <tr><td>Marks Obtained:</td><td>{student.marksObtained}</td></tr>
-          <tr><td>Session:</td><td>{student.session}</td></tr>
-        </tbody>
-      </table>
-
-      <div className="mt-3 justify-content-space-between">
-        <a
-          href="https://example.com/dmc"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-primary me-2"
-        >
-          View Your DMC
-        </a>
-        <button className="btn btn-success me-2" onClick={() => handleDownload("pdf1")}>
-          Download PDF
-        </button>
-        {/* <button className="btn btn-success" onClick={() => handleDownload("pdf2")}>
-          Download PDF 2
-        </button> */}
+        </div>
       </div>
-    </div>
-    </div>
     </>
   );
 };
