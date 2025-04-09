@@ -23,6 +23,7 @@ router.post('/add-student',  upload.fields([
   { name: 'documents', maxCount: 10 }
 ]),
 
+
 async (req, res) => {
   try {
     const {
@@ -32,7 +33,15 @@ async (req, res) => {
     } = req.body;
 
     const photo = req.files['photo'] ? req.files['photo'][0].filename : null;
-    
+      // Check if student already exists
+      const existingStudent = await student_details.findOne({ where: { registrationNo } });
+
+      if (existingStudent) {
+        return res.status(400).json({ error: 'Student with this registration number already exists.' });
+      }
+  
+
+    // If not, create new student
     const student = await student_details.create({
       collegeName,
       registrationNo,
@@ -48,6 +57,7 @@ async (req, res) => {
       photo
     });
 
+    
       // 2️⃣ Store Documents if uploaded
       if (req.files['documents']) {
         const documentRecords = req.files['documents'].map(doc => ({
@@ -90,17 +100,46 @@ console.log(student);
 });
 
 // 📝 Update a student by ID
-router.put('/update-student/:id', async (req, res) => {
-  try {
-    const student = await student_details.findByPk(req.params.id);
-    if (!student) return res.status(404).json({ error: 'Student not found' });
+// ✏️ Update student route with photo support
+router.put('/api/update-student/:id',
+  upload.single('photo'), // Handle single photo upload if updated
+  async (req, res) => {
+    try {
+      const student = await student_details.findByPk(req.params.id);
+      if (!student) return res.status(404).json({ error: 'Student not found' });
 
-    await student.update(req.body);
-    res.json({ message: 'Student updated', student });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+      const {
+        candidateName,
+        fatherName,
+        motherName,
+        marksObtained,
+        session,
+        dob,
+        course
+      } = req.body;
+
+      // If a new photo is uploaded
+      const updatedPhoto = req.file ? req.file.filename : student.photo;
+
+      await student.update({
+        candidateName,
+        fatherName,
+        motherName,
+        marksObtained,
+        session,
+        course,
+        dob,
+        photo: updatedPhoto
+      });
+
+      res.json({ message: 'Student updated successfully', student });
+    } catch (err) {
+      console.error(err);
+      res.status(400).json({ error: err.message });
+    }
   }
-});
+);
+
 
 // ❌ Delete a student by ID
 router.delete('/delete-student/:id', async (req, res) => {
