@@ -21,6 +21,9 @@ function Login() {
       // You can replace this URL with your actual API endpoint
       const res = await axios.post(`${baseURL}/api/login`, formData);
       console.log('Login success:', res.data);
+      localStorage.setItem("token", JSON.stringify(res.data.token));
+
+     
       alert('Login successful!');
       navigate('/dashboard');
     } catch (error) {

@@ -101,7 +101,7 @@ console.log(student);
 
 // 📝 Update a student by ID
 // ✏️ Update student route with photo support
-router.put('/api/update-student/:id',
+router.put('/update-student/:id',
   upload.single('photo'), // Handle single photo upload if updated
   async (req, res) => {
     try {

@@ -21,13 +21,13 @@ const Sidebar = () => {
         </li> */}
 
         <li>
-          <Link to="/dashboard/formshow" className="nav-link text-white">
+          <Link to="/dashboard/AddResult" className="nav-link text-white">
             Result Fill
           </Link>
         </li>
 
         <li>
-          <Link to="/dashboard/formList" className="nav-link text-white">
+          <Link to="/dashboard/StudentList" className="nav-link text-white">
             Students List
           </Link>
         </li>

@@ -21,8 +21,8 @@ function AppWrapper() {
      
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} >
-        <Route path="formshow" element={<StudentForm />} />
-        <Route path="formList" element={<StudentList/>}/>
+        <Route path="AddResult" element={<StudentForm />} />
+        <Route path="StudentList" element={<StudentList/>}/>
         </Route>
         <Route path="/editStudent/:id"  element={<EditStudent/>} />
         <Route path="/login" element={<Login />} />

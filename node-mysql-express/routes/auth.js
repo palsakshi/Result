@@ -1,31 +1,33 @@
 const express = require('express');
-const router = express.Router();
-// const { user_table } = require('../models'); // Sequelize model
-const userlogin = require('../models/userlogin');
 
-// 🔐 Admin Login Only
-router.post('/login', async (req, res) => {
+
+const router = express.Router();
+
+
+
+
+ // You should store this in .env 
+router.post('', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // ✅ Find admin by email
-    const admin = await userlogin.findOne({ where: { email } });
+    const admin = await Userlogin.findOne({ where: { email } });
 
-    // ❌ Invalid email or password
     if (!admin || admin.password !== password) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // ✅ Login success
+  
+    // ✅ Send token and basic user info (avoid sending password!)
     res.json({
-      message: 'Admin login successful',
+      message: 'Login successful',
+      token: token,
       admin: {
         id: admin.id,
-        email: admin.email,
-        password:admin.password
-        // Avoid sending password back
+        email: admin.email
       }
     });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
