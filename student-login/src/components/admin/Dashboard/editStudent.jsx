@@ -1,39 +1,53 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import baseURL from '../../../baseURL';
 
 const EditStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const photoRef = useRef(null);
-  const { regNo } = useParams();
-  
+
   const [student, setStudent] = useState({
     candidateName: '',
     marksObtained: '',
+    totalMarks: '',
     dob: '',
     course: '',
     session: '',
     fatherName: '',
     motherName: '',
-    photo: null
+    photo: null,
   });
 
-  const [existingPhoto, setExistingPhoto] = useState(null); // to show previous photo
+  const [existingPhoto, setExistingPhoto] = useState(null);
 
   useEffect(() => {
-    fetchStudent();
+    if (state?.student) {
+      setStudent({ ...state.student, photo: null });
+      setExistingPhoto(state.student.photo);
+    } else {
+      fetchStudent();
+    }
   }, []);
 
   const fetchStudent = async () => {
     try {
-      const res = await axios.get(`${baseURL}/api/all-students/:${regNo}`);
-      const data = res.data;
-      setStudent({ ...data, photo: null }); // we clear photo input, only show old one
-      setExistingPhoto(data.photo); // store old photo path/URL
+      const res = await axios.get(`${baseURL}/api/all-students`);
+      const studentList = res.data;
+
+      const studentData = studentList.find((s) => s.id.toString() === id.toString());
+
+      if (!studentData) {
+        alert("Student not found!");
+        return;
+      }
+
+      setStudent({ ...studentData, photo: null });
+      setExistingPhoto(studentData.photo);
     } catch (err) {
-      console.error( "eee" + err);
+      console.error("Error fetching student:", err);
     }
   };
 
@@ -47,11 +61,11 @@ const EditStudent = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const form = new FormData();
 
+    const form = new FormData();
     for (let key in student) {
       if (key === 'photo' && student.photo) {
-        form.append('photo', student.photo); // only append if new photo selected
+        form.append('photo', student.photo);
       } else if (key !== 'photo') {
         form.append(key, student[key]);
       }
@@ -59,11 +73,11 @@ const EditStudent = () => {
 
     try {
       await axios.put(`${baseURL}/api/update-student/${id}`, form, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      alert("Student updated successfully!");
-      navigate('/dashboard/formList');
+      alert('Student updated successfully!');
+      navigate('/dashboard/StudentList');
     } catch (err) {
       console.error(err);
       alert('Error while updating student');
@@ -75,13 +89,21 @@ const EditStudent = () => {
       <h3>Edit Student</h3>
       <form onSubmit={handleUpdate} encType="multipart/form-data">
 
-        {/* Photo Preview + Upload */}
+        {/* Show Existing Photo */}
         {existingPhoto && (
           <div className="mb-3">
             <label className="form-label">Current Photo:</label><br />
-            <img src={`${baseURL}/uploads/${existingPhoto}`} alt="Student" width="120" height="120" className="img-thumbnail" />
+            <img
+              src={`${baseURL}/uploads/${existingPhoto}`}
+              alt="Student"
+              width="120"
+              height="120"
+              className="img-thumbnail"
+            />
           </div>
         )}
+
+        {/* Upload New Photo */}
         <div className="mb-3">
           <label className="form-label">Change Photo</label>
           <input
@@ -94,21 +116,25 @@ const EditStudent = () => {
           />
         </div>
 
-        {/* Editable Fields */}
+        {/* Form Fields */}
         {[
           ['candidateName', 'Name'],
           ['fatherName', 'Father Name'],
           ['motherName', 'Mother Name'],
           ['marksObtained', 'Marks Obtained'],
+          ['totalMarks', 'Total Marks'],
           ['course', 'Course'],
           ['session', 'Session'],
           ['dob', 'Date of Birth'],
-  
         ].map(([name, label]) => (
           <div className="mb-3" key={name}>
             <label className="form-label">{label}</label>
             <input
-              type={name === 'dob' ? 'date' : name.includes('Marks') ? 'number' : 'text'}
+              type={
+                name === 'dob' ? 'date' :
+                name.includes('Marks') ? 'number' :
+                'text'
+              }
               name={name}
               value={student[name] || ''}
               onChange={handleChange}
@@ -118,8 +144,9 @@ const EditStudent = () => {
           </div>
         ))}
 
+        {/* Buttons */}
         <button type="submit" className="btn btn-success">Update</button>
-        <button type="button" className="btn btn-secondary ms-2" onClick={() => navigate('/dashboard/formList')}>Cancel</button>
+        <button type="button" className="btn btn-secondary ms-2" onClick={() => navigate('/dashboard/StudentList')}>Cancel</button>
       </form>
     </div>
   );

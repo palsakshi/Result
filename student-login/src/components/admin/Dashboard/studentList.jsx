@@ -9,6 +9,7 @@ const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({});
+  const [searchText, setSearchText] = useState('');
  const Navigate = useNavigate();
   useEffect(() => {
     fetchRecords();
@@ -23,10 +24,16 @@ const StudentList = () => {
     }
   };
 
+  const filteredStudents = students.filter((student) =>
+    student.candidateName?.toLowerCase().includes(searchText.toLowerCase()) ||
+    student.rollNo?.toString().toLowerCase().includes(searchText.toLowerCase()) ||
+    student.registrationNo?.toLowerCase().includes(searchText.toLowerCase()) ||
+    student.course?.toLowerCase().includes(searchText.toLowerCase())
+  );
   const handleEditClick = (student) => {
     setEditId(student.id);
     setEditData({ ...student });
-    Navigate(`/editStudent/${student.id}`);
+    Navigate(`/editStudent/${student.id}`,  { state: { student } });
   };
 
   const handleCancelEdit = () => {
@@ -39,6 +46,14 @@ const StudentList = () => {
       ...editData,
       [e.target.name]: e.target.value,
     });
+  };
+  const customStyles = {
+    cells: {
+      style: {
+        paddingRight: '0px', // 🔥 This will remove right padding
+        paddingLeft: '16px'  // Keep the left padding if needed
+      },
+    },
   };
 
   const handleSave = async (id) => {
@@ -155,19 +170,33 @@ const StudentList = () => {
   ];
 
   return (
+    
     <div className="container mt-5">
       <h3 className="text-center mb-4">All Student Records</h3>
+      
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by name, roll no, reg. no or course..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+      </div>
+  
       <DataTable
         columns={columns}
-        data={students}
+        data={filteredStudents}
         pagination
         highlightOnHover
         striped
         responsive
         persistTableHead
+        customStyles={ customStyles}
       />
     </div>
   );
+  
 };
 
 export default StudentList;

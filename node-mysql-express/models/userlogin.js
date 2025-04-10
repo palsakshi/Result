@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    }, 
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'admin1'  // ✅ Corrected
+    },
+    name: {
+      type: DataTypes.STRING,
+      defaultValue: 'Admin'  // ✅ Already correct
     }
   });
 
