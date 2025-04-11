@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const { sequelize } = require('./models');
 require('dotenv').config();
 app.use(bodyParser.json());
+// ggh
 
 
 const studentRoutes = require('./routes/studentDetails');
