@@ -1,9 +1,5 @@
 const express = require('express');
-
-
 const router = express.Router();
-
-
 
 
  // You should store this in .env 

@@ -142,9 +142,9 @@ router.put('/update-student/:id',
 
 
 // ❌ Delete a student by ID
-router.delete('/delete-student/:id', async (req, res) => {
+router.delete('/delete-student/:del_id', async (req, res) => {
   try {
-    const student = await student_details.findByPk(req.params.id);
+    const student = await student_details.findByPk(req.params.del_id);
     if (!student) return res.status(404).json({ error: 'Student not found' });
 
     await student.destroy();

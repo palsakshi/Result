@@ -1,11 +1,10 @@
 import {useEffect  } from 'react';
-
+import axios from 'axios';
 import React from 'react'
-
 import Navbar from '../Dashboard/TopNav'
 import Sidebar from '../Dashboard/SideNav'
 import { Outlet, useNavigate} from 'react-router-dom';
-
+import baseURL from '../../../baseURL';
 
 function DashboardHome() {
   const navigate= useNavigate();
@@ -15,8 +14,27 @@ function DashboardHome() {
     const token = JSON.parse(localStorage.getItem('token'));
     if (!token) {
       navigate('/login');
+    } else {
+      axios.get(`${baseURL}/api/dashboard`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        console.log('User info:', res.data.user);
+        // setUser(res.data.user); // 👈 Save user data (email, name, role)
+        alert(`Welcome, ${res.data.user.name}!`);
+      })
+      .catch(err => {
+        if (err?.response?.data?.error === "Token expired") {
+          alert("Session expired. Please log in again.");
+          localStorage.removeItem("token");
+          navigate('/login');
+        }
+      });
     }
   }, []);
+
   return (
     <div  style={{ height: '100vh', overflow: 'hidden' }}>
       <Navbar/>
