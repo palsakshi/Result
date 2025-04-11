@@ -1,47 +1,48 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const db = require('./models');
+const path = require('path');
 const { sequelize } = require('./models');
+require('dotenv').config(); // Load from .env if using in development
 
-// const authRoutes = require('./routes/auth');
-// const userRoutes = require('./routes/userRoutes');
-const studentRoutes = require('./routes/studentDetails');
-const userLogin = require('./routes/userRoutes')
+const isProduction = process.env.NODE_ENV === 'production';
 
-// ✅ CORS Setup
-// app.use(cors({
-//   origin: 'http://localhost:5174', // 👈 Use your frontend URL
-//   credentials: true // only needed if you're using cookies/auth tokens
-// }));
-
-
-
-
-app.use('/uploads', express.static('uploads'));
-// ✅ Middleware
-app.use(express.json()); // for parsing application/json
 app.use(cors());
-// ✅ Routes
-// app.use('/api', authRoutes);
-app.use('/api', studentRoutes);
-app.use('/api', userLogin);
-// app.use('/users', userRoutes); 
+app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
+// API Routes
+app.use('/api', require('./routes/studentDetails'));
+app.use('/api', require('./routes/userRoutes'));
 
-app.get('/', (req, res) => {
-  res.send('✅ Backend is working fine!');
-});
+// 👉 Serve frontend only in production or optionally in development
+if (isProduction || process.env.SERVE_FRONTEND === 'true') {
+  app.use(express.static(path.join(__dirname, 'dist')));
 
+  // ✅ Use both patterns based on environment
+  if (isProduction) {
+    // For production – `{*splat}` format (some production routers like Vercel, Netlify prefer this)
+    app.get('*', (req, res, next) => {
+      if (req.originalUrl.startsWith('/api')) return next();
+      res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    });
+  } else {
+    // For development – traditional `*` pattern
+    app.get('/{*splat}', (req, res, next) => {
+      if (req.originalUrl.startsWith('/api')) return next();
+      res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    });
+  
+  }
+}
 
-
-// ✅ Start Server
+// Server
 app.listen(3000, async () => {
   try {
     await sequelize.authenticate();
-    console.log('MySQL DB Connected');
-    console.log('Server running at http://localhost:3000');
-  } catch (error) {
-    console.error('Unable to connect to DB:', error);
+    console.log('✅ MySQL DB Connected');
+    console.log(`🚀 Server running on http://localhost:3000 in ${isProduction ? 'production' : 'development'} mode`);
+  } catch (err) {
+    console.error('❌ DB connection error:', err.message);
   }
 });
