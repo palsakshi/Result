@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import "./login.css";
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import baseURL from '../../baseURL';
+import "./login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -20,7 +20,11 @@ function Login() {
     try {
       // You can replace this URL with your actual API endpoint
       const res = await axios.post(`${baseURL}/api/login`, formData);
-      console.log('Login success:', res.data);
+      console.log('Full response:', res.data);
+      console.log(res)
+
+    localStorage.setItem('token',JSON.stringify(res.data.token))
+      console.log('Login success:',res.data);
       alert('Login successful!');
       navigate('/dashboard');
     } catch (error) {

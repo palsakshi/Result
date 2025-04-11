@@ -14,7 +14,8 @@ module.exports = {
       },
       registrationNo: {
         type: Sequelize.STRING,
-        unique: true
+        allowNull: false,
+        unique: true // ✅ use unique instead of primaryKey
       },
       rollNo: {
         type: Sequelize.STRING
@@ -53,6 +54,7 @@ module.exports = {
       }
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('student_details');
   }

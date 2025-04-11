@@ -11,9 +11,10 @@ module.exports = {
       },
       registrationNo: {
         type: Sequelize.STRING,
+        allowNull: false, // ✅ required for FK
         references: {
-          model: 'student_details',
-          key: 'registrationNo'
+          model: 'student_details', // ✅ this must match table name
+          key: 'registrationNo'     // ✅ this must match column name
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'

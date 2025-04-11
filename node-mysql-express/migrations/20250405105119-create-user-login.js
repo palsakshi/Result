@@ -9,7 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email: {
+      name:{
+        type:Sequelize.STRING
+      },
+      role:{
+        type:Sequelize.STRING, 
+         allowNull: false,
+      defaultValue: 'admin'
+} ,  
+email: {
         type: Sequelize.STRING
       },
       password: {
