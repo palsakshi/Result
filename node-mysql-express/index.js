@@ -7,8 +7,7 @@ const { sequelize } = require('./models');
 require('dotenv').config();
 app.use(bodyParser.json());
 
-// const authRoutes = require('./routes/auth');
-// const userRoutes = require('./routes/userRoutes');
+
 const studentRoutes = require('./routes/studentDetails');
 const userLogin = require('./routes/userRoutes')
 

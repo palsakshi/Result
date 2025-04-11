@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
           role: ADMIN_ROLE
         },
         SECRET_KEY,
-        { expiresIn: '1d' } // Token expires in 1 day
+        { expiresIn: '1s' } // Token expires in 1 day
       );
 
       console.log("Generated token:", token);
