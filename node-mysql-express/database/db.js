@@ -1,22 +1,30 @@
-const sequelize =require('sequelize');
-const db=new sequelize('students','root','',{
-  host: 'localhost',
-  dialect: 'mysql'
+const { Sequelize } = require('sequelize');
+require('dotenv').config(); // 👈 Load .env variables
 
-});
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+    logging: false, // Optional: disables raw SQL logging
+  }
+);
 
-const connection=()=>{
-  db.authenticate()
-  .then(()=>{
-    console.log('database connected')
+// Test DB connection
+const connectDB = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('✅ Database connected');
+  } catch (err) {
+    console.error('❌ Database not connected:', err.message);
+  }
+};
 
-  })
-  .catch(err=>{
-    console.log('database not connected',err.message)
-  })
-}
-connection();
-module.exports=db;
+connectDB();
+
+module.exports = sequelize;
 
 
 
