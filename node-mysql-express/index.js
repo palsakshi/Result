@@ -6,7 +6,7 @@ const { sequelize } = require('./models');
 require('dotenv').config(); // Load from .env if using in development
 
 const isProduction = process.env.NODE_ENV === 'production';
-
+const PORT = process.env.PORT|| 3000;
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
@@ -37,11 +37,11 @@ if (isProduction || process.env.SERVE_FRONTEND === 'true') {
 }
 
 // Server
-app.listen(3000, async () => {
+app.listen(PORT, async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ MySQL DB Connected');
-    console.log(`🚀 Server running on http://localhost:3000 in ${isProduction ? 'production' : 'development'} mode`);
+    console.log(`🚀 Server running on http://localhost:${PORT} in ${isProduction ? 'production' : 'development'} mode`);
   } catch (err) {
     console.error('❌ DB connection error:', err.message);
   }
