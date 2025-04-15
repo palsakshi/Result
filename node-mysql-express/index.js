@@ -17,7 +17,7 @@ app.use('/api', require('./routes/userRoutes'));
 
 // 👉 Serve frontend only in production or optionally in development
 if (isProduction || process.env.SERVE_FRONTEND === 'true') {
-  app.use(express.static(path.join(__dirname, 'dist')));
+  // app.use(express.static(path.join(__dirname, 'dist')));
 
   // ✅ Use both patterns based on environment
   if (isProduction) {
@@ -27,7 +27,7 @@ if (isProduction || process.env.SERVE_FRONTEND === 'true') {
     // For production – `{*splat}` format (some production routers like Vercel, Netlify prefer this)
     app.get('/{*splat}', (req, res, next) => {
       if (req.originalUrl.startsWith('/api')) return next();
-      res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+     
     });
     
   } else {
