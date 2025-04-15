@@ -16,11 +16,11 @@ module.exports = {
     dialect: "mysql"
   },
   production: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: process.env.DB_DIALECT
+    username: 'root',
+    password: 'CxSzargcMrjeigymRBuSNRHVbygRyiuL',
+    database: 'railway',
+    host: 'mysql.railway.internal',
+    port: 3306,
+    dialect: 'mysql'
   }
 };
