@@ -4,9 +4,9 @@ const cors = require('cors');
 const path = require('path');
 const { sequelize } = require('./models');
 require('dotenv').config(); // Load from .env if using in development
-
+const PORT = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
-const PORT = process.env.PORT|| 3000;
+
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
