@@ -19,8 +19,8 @@ module.exports = {
     username: 'root',
     password: 'CxSzargcMrjeigymRBuSNRHVbygRyiuL',
     database: 'railway',
-    host: 'mysql.railway.internal',
-    port: 3306,
+    host: 'switchyard.proxy.rlwy.net',
+    port: 49377,
     dialect: 'mysql'
   }
 };
