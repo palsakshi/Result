@@ -39,7 +39,8 @@ if (isProduction || process.env.SERVE_FRONTEND === 'true') {
     });
   
   }
-}
+} 
+console.log(PORT);
 
 // Server
 app.listen(PORT, async () => {
