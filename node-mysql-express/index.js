@@ -27,7 +27,7 @@ if (isProduction || process.env.SERVE_FRONTEND === 'true') {
     // For production – `{*splat}` format (some production routers like Vercel, Netlify prefer this)
     app.get('/{*splat}', (req, res, next) => {
       if (req.originalUrl.startsWith('/api')) return next();
-      // res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+     
     });
     
   } else {
