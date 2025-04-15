@@ -32,7 +32,7 @@ console.log(student);
         <div className="container  text-center">
        <div style={{ width: "30%", height: "30%",float: "right",overflow: "hidden"  }}>
           <img
-            src={`http://localhost:3000/uploads/${student.photo}`}
+            src={`https://resultproject-yqxq.onrender.com/uploads/${student.photo}`}
             className="img-thumbnail rounded "
             style={{ width: "30%", float: "right", height:"30%", objectFit:"contain" }}
             alt="Student"
@@ -69,7 +69,7 @@ console.log(student);
                           <td>Marksheet {index + 1}</td>
                           <td>
                             <a
-                              href={`http://localhost:3000/uploads/${doc.filePath}`}
+                              href={`https://resultproject-yqxq.onrender.com/uploads/${doc.filePath}`}
                               className="text-primary fw-semibold"
                               download
                               target="_blank"
