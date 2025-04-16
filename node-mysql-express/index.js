@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const { sequelize } = require('./models');
 require('dotenv').config(); // Load from .env if using in development
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 4000;
 const isProduction = process.env.NODE_ENV === 'production';
 // const baseUrl = require();
 app.use(cors());
@@ -43,7 +43,7 @@ if (isProduction || process.env.SERVE_FRONTEND === 'true') {
 console.log(PORT);
 
 // Server
-app.listen(PORT, async () => {
+app.listen(PORT, '0.0.0.0' ,async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ MySQL DB Connected');
