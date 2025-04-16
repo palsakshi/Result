@@ -34,7 +34,7 @@ const EditStudent = () => {
 
   const fetchStudent = async () => {
     try {
-      const res = await axios.get(`${baseURL}/api/all-students`);
+      const res = await axios.get(`${baseURL}/api/allStudents`);
       const studentList = res.data;
 
       const studentData = studentList.find((s) => s.id.toString() === id.toString());
@@ -72,7 +72,7 @@ const EditStudent = () => {
     }
 
     try {
-      await axios.put(`${baseURL}/api/update-student/${id}`, form, {
+      await axios.put(`${baseURL}/api/updateStudent/${id}`, form, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

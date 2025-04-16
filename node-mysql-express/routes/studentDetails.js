@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 // ➕ Add a student
-router.post('/add-student',  upload.fields([
+router.post('/addStudent',  upload.fields([
   { name: 'photo', maxCount: 1 },
   { name: 'documents', maxCount: 10 }
 ]),
@@ -75,7 +75,7 @@ async (req, res) => {
 });
 
 // 📥 Get all students
-router.get('/all-students', async (req, res) => {
+router.get('/allStudents', async (req, res) => {
   try {
     const students = await student_details.findAll();
     res.status(200).json(students);
@@ -84,7 +84,7 @@ router.get('/all-students', async (req, res) => {
   }
 });
 
-router.get('/all-students/:regNo', async (req, res) => {
+router.get('/allStudents/:regNo', async (req, res) => {
   const { regNo } = req.params;
 
 
@@ -101,7 +101,7 @@ console.log(student);
 
 // 📝 Update a student by ID
 // ✏️ Update student route with photo support
-router.put('/update-student/:id',
+router.put('/updateStudent/:id',
   upload.single('photo'), // Handle single photo upload if updated
   async (req, res) => {
     try {
@@ -142,7 +142,7 @@ router.put('/update-student/:id',
 
 
 // ❌ Delete a student by ID
-router.delete('/delete-student/:del_id', async (req, res) => {
+router.delete('/deleteStudent/:del_id', async (req, res) => {
   try {
     const student = await student_details.findByPk(req.params.del_id);
     if (!student) return res.status(404).json({ error: 'Student not found' });

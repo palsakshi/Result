@@ -43,7 +43,7 @@ const StudentForm = ({ onAdd }) => {
 
     console.log(formData);
     try {
-      await axios.post(`${baseURL}/api/add-student`, form, {
+      await axios.post(`${baseURL}/api/addStudent`, form, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
