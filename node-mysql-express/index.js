@@ -23,26 +23,22 @@ if (isProduction || process.env.SERVE_FRONTEND === 'true') {
   if (isProduction) {
 
     console.log("test");
+
+    // For production – `{*splat}` format (some production routers like Vercel, Netlify prefer this)
+    app.get('/{*splat}', (req, res, next) => {
+      if (req.originalUrl.startsWith('/api')) return next();
+     
+    });
+    
+  } else {
+    
+    // For development – traditional `*` pattern
     app.get('*', (req, res, next) => {
       if (req.originalUrl.startsWith('/api')) return next();
       res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     });
-    // For production – `{*splat}` format (some production routers like Vercel, Netlify prefer this)
-    // app.get('/{*splat}', (req, res, next) => {
-    //   if (req.originalUrl.startsWith('/api')) return next();
-     
-    // });
-    
-  } 
-  // else {
-    
-  //   // For development – traditional `*` pattern
-  //   app.get('*', (req, res, next) => {
-  //     if (req.originalUrl.startsWith('/api')) return next();
-  //     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-  //   });
   
-  // }
+  }
 } 
 console.log(PORT);
 
