@@ -12,10 +12,7 @@ import StudentList from "./components/admin/Dashboard/studentList";
 import EditStudent  from "./components/admin/Dashboard/editStudent";
 
 function AppWrapper() {
-  // const location = useLocation();
-
-  // const hideNavbar = ["/login", "/dashboard", "/dashboard/formshow", "/dashboard/formList"  ].includes(location.pathname);
-
+  
   return (
     <>
      

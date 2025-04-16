@@ -16,7 +16,7 @@ const Search = () => {
     }
 
     try {
-      const res = await axios.get(`${baseURL}/api/all-students/${regNo}`);
+      const res = await axios.get(`${baseURL}/api/allStudents/${regNo}`);
       
       // console.log('fki');
       // const res = await axios.get(`${baseURL}/api/all-students/${regNo}`);

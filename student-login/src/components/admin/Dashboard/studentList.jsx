@@ -17,7 +17,7 @@ const StudentList = () => {
 
   const fetchRecords = async () => {
     try {
-      const res = await axios.get(`${baseURL}/api/all-students`);
+      const res = await axios.get(`${baseURL}/api/allStudents`);
       setStudents(res.data);
     } catch (error) {
       console.error('Error fetching student data:', error);
@@ -58,7 +58,7 @@ const StudentList = () => {
 
   const handleSave = async (id) => {
     try {
-      await axios.put(`${baseURL}/api/update-student/${id}`, editData);
+      await axios.put(`${baseURL}/api/updateStudent/${id}`, editData);
       setEditId(null);
       fetchRecords();
     } catch (error) {
@@ -69,7 +69,7 @@ const StudentList = () => {
   const deleteStudent = async (id) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       try {
-        await axios.delete(`${baseURL}/api/delete-student/${id}`);
+        await axios.delete(`${baseURL}/api/deleteStudent/${id}`);
         setStudents(students.filter((stu) => stu.id !== id));
       } catch (error) {
         console.error('Error deleting student:', error);
