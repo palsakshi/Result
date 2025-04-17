@@ -16,7 +16,12 @@ const Search = () => {
     }
 
     try {
-      const res = await axios.get(`${baseURL}/api/allStudents/${regNo}`);
+     
+      const res = await axios.get(`${baseURL}/api/get-single-student-info`,{
+        params: {
+          regNo: regNo
+        }
+      });
       
       
       if (res.data) {

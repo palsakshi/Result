@@ -22,8 +22,7 @@ function DashboardHome() {
       })
       .then(res => {
         console.log('User info:', res.data.user);
-        // setUser(res.data.user); // 👈 Save user data (email, name, role)
-        alert(`Welcome, ${res.data.user.name}!`);
+        
       })
       .catch(err => {
         if (err?.response?.data?.error === "Token expired") {

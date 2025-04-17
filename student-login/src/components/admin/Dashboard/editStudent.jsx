@@ -72,10 +72,14 @@ const EditStudent = () => {
     }
 
     try {
-      await axios.put(`${baseURL}/api/updateStudent/${id}`, form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-
+      await axios.put(
+        `${baseURL}/api/updateStudent/`,
+        form, // 2️⃣ This is the form data
+        {
+          params: { id: id }, // 3️⃣ This is query parameter (?id=...)
+          headers: { 'Content-Type': 'multipart/form-data' } // for file uploads
+        }
+      );
       alert('Student updated successfully!');
       navigate('/dashboard/StudentList');
     } catch (err) {

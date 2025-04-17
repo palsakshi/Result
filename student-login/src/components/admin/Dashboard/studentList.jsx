@@ -58,7 +58,11 @@ const StudentList = () => {
 
   const handleSave = async (id) => {
     try {
-      await axios.put(`${baseURL}/api/updateStudent/${id}`, editData);
+      await axios.put(`${baseURL}/api/updateStudent` , editData,{
+        params:{
+  id : id
+        }
+      });
       setEditId(null);
       fetchRecords();
     } catch (error) {
@@ -69,7 +73,11 @@ const StudentList = () => {
   const deleteStudent = async (id) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       try {
-        await axios.delete(`${baseURL}/api/deleteStudent/${id}`);
+        await axios.delete(`${baseURL}/api/deleteStudent`,{
+          params:{
+            id : id
+                  }
+        });
         setStudents(students.filter((stu) => stu.id !== id));
       } catch (error) {
         console.error('Error deleting student:', error);
