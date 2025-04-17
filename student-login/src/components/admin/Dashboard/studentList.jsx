@@ -33,7 +33,7 @@ const StudentList = () => {
   const handleEditClick = (student) => {
     setEditId(student.id);
     setEditData({ ...student });
-    Navigate(`/editStudent/${student.id}`,  { state: { student } });
+    Navigate(`/editStudent`,  { state: { student } });
   };
 
   const handleCancelEdit = () => {
