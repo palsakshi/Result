@@ -18,13 +18,10 @@ const Search = () => {
     try {
       const res = await axios.get(`${baseURL}/api/allStudents/${regNo}`);
       
-      // console.log('fki');
-      // const res = await axios.get(`${baseURL}/api/all-students/${regNo}`);
-      // console.log(res.data);
       
       if (res.data) {
         // Store the result in localStorage
-        // localStorage.setItem("studentData", JSON.stringify(res.data));
+      ;
         console.log(res.data);
         localStorage.setItem("studentInfo", JSON.stringify(res.data));
 

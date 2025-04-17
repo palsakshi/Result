@@ -7,7 +7,7 @@ import Search from "./components/admin/Search";
 import UserInfo from "./components/UserInfo";
 import Login from "./components/admin/login";
 import Dashboard from "./components/admin/Dashboard/DashboardHome";
-import StudentForm from "./components/admin/Dashboard/studentForm"; // ✅ Correct name
+import StudentForm from "./components/admin/Dashboard/studentform"; // ✅ Correct name
 import StudentList from "./components/admin/Dashboard/studentList"; 
 import EditStudent  from "./components/admin/Dashboard/editStudent";
 

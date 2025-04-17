@@ -24,12 +24,6 @@ const Sidebar = () => {
       </Link>
 
       <ul className="nav nav-pills flex-column mb-auto">
-        {/* <li className="nav-item">
-          <Link to="/dashboard" className="nav-link text-white">
-            Dashboard
-          </Link>
-        </li> */}
-
         <li>
           <Link to="/dashboard/AddResult" className="nav-link text-white">
             Result Fill

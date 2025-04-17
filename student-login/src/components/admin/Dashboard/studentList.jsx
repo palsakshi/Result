@@ -91,7 +91,7 @@ const StudentList = () => {
         />
       ) : (
         <img
-          src={`http://localhost:3000/uploads/${row.photo}`}
+          src={`${baseURL}/uploads/${row.photo}`}
           alt="student"
           style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '50%' }}
         />
