@@ -5,7 +5,7 @@ const path = require('path');
 const { sequelize } = require('./models');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(cors());
@@ -16,21 +16,17 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api', require('./routes/studentDetails'));
 app.use('/api', require('./routes/userRoutes'));
 
-// ✅ Serve frontend from ./dist inside backend
-if (isProduction || process.env.SERVE_FRONTEND === 'true') {
-  const frontendPath = path.join(__dirname, 'dist');
-  app.use(express.static(frontendPath));
-
-  app.get('*', (req, res, next) => {
-    if (req.originalUrl.startsWith('/api')) return next();
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
-}
+app.use(express.static(path.join(__dirname, 'student-login', 'dist')));
 
 // ✅ Required for Render health check
 app.get('/', (req, res) => {
   res.send('✅ Server is running!');
 });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'student-login', 'dist', 'index.html'));
+});
+
 
 app.listen(PORT, '0.0.0.0', async () => {
   try {

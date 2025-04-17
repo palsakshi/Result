@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import myLogo from "../assets/img/logo.jpg";
-
+ import baseURL from "../baseURL";
 const UserInfo = () => {
   const [student, setStudent] = useState(null);
 
@@ -32,7 +32,7 @@ console.log(student);
         <div className="container  text-center">
        <div style={{ width: "30%", height: "30%",float: "right",overflow: "hidden"  }}>
           <img
-            src={`https://resultproject-yqxq.onrender.com/uploads/${student.photo}`}
+            src={`${baseURL}/uploads/${student.photo}`}
             className="img-thumbnail rounded "
             style={{ width: "30%", float: "right", height:"30%", objectFit:"contain" }}
             alt="Student"
@@ -69,7 +69,7 @@ console.log(student);
                           <td>Marksheet {index + 1}</td>
                           <td>
                             <a
-                              href={`https://resultproject-yqxq.onrender.com/uploads/${doc.filePath}`}
+                              href={`${baseURL}/uploads/${doc.filePath}`}
                               className="text-primary fw-semibold"
                               download
                               target="_blank"

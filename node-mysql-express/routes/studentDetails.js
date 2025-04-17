@@ -84,9 +84,11 @@ router.get('/allStudents', async (req, res) => {
   }
 });
 
-router.get('/allStudents/:regNo', async (req, res) => {
-  const { regNo } = req.params;
+router.get('/get-single-student-info', async (req, res) => {
 
+  // console.log("request data : ",req);
+  // console.log("reg no : ",req.query);
+  const { regNo } = req.query;
 
   const student = await student_details.findOne({ where: { registrationNo: regNo },
     include: [{
@@ -101,11 +103,13 @@ console.log(student);
 
 // 📝 Update a student by ID
 // ✏️ Update student route with photo support
-router.put('/updateStudent/:id',
+router.put('/updateStudent',
   upload.single('photo'), // Handle single photo upload if updated
   async (req, res) => {
     try {
-      const student = await student_details.findByPk(req.params.id);
+      const {id} = req.query
+      const student = await student_details.findByPk(id);
+  
       if (!student) return res.status(404).json({ error: 'Student not found' });
 
       const {
@@ -142,9 +146,12 @@ router.put('/updateStudent/:id',
 
 
 // ❌ Delete a student by ID
-router.delete('/deleteStudent/:del_id', async (req, res) => {
+router.delete('/deleteStudent', async (req, res) => {
   try {
-    const student = await student_details.findByPk(req.params.del_id);
+    // const {id} = res.query; 
+   
+    const student = await student_details.findByPk(req.query.id);
+    
     if (!student) return res.status(404).json({ error: 'Student not found' });
 
     await student.destroy();
