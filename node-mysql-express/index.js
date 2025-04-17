@@ -13,8 +13,8 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 // API Routes
-//app.use('/api', require('./routes/studentDetails'));
-//app.use('/api', require('./routes/userRoutes'));
+app.use('/api', require('./routes/studentDetails'));
+app.use('/api', require('./routes/userRoutes'));
 
 // ✅ Serve frontend from ./dist inside backend
 if (isProduction || process.env.SERVE_FRONTEND === 'true') {
