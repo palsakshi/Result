@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(cors({
-  origin: 'https://resultstudents.vercel.app/',
+  origin: 'https://resultstudents-git-main-sakshis-projects-fd2c56cf.vercel.app/',
+
    methods:['POST', 'GET', 'PUT', 'DELETE', 'UPDATE'],
   credentials: true
 }));
