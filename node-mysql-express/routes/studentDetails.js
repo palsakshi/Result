@@ -86,8 +86,7 @@ router.get('/allStudents', async (req, res) => {
 
 router.get('/get-single-student-info', async (req, res) => {
 
-  // console.log("request data : ",req);
-  // console.log("reg no : ",req.query);
+ 
   const { regNo } = req.query;
 
   const student = await student_details.findOne({ where: { registrationNo: regNo },
