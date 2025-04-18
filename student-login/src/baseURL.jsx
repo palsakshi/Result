@@ -7,7 +7,7 @@ if(!baseURL){
     console.log(import.meta.env.MODE);
     baseURL = import.meta.env.MODE === 'development'
     ? 'http://localhost:5000'
-    : 'https://resultproject-yqxq.onrender.com';
+    : 'https://result-m0mg.onrender.com';
 }
 console.log("Current base url:", baseURL )
 export default  baseURL;

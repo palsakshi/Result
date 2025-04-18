@@ -8,7 +8,11 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === 'production';
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://resultstudents.vercel.app/',
+   methods:['POST', 'GET', 'PUT', 'DELETE', 'UPDATE'],
+  credentials: true
+}));
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
