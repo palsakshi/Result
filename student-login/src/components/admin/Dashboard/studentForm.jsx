@@ -87,8 +87,7 @@ const StudentForm = ({ onAdd }) => {
             accept="image/*"
             ref={photoRef}
             onChange={(e) =>
-              setFormData({ ...formData, photo: e.target.files[0] })
-            }
+              setFormData({ ...formData, photo: e.target.files[0] }) }
             className="form-control"
             required
           />

@@ -73,7 +73,7 @@ const EditStudent = () => {
 
     try {
       await axios.put(
-        `${baseURL}/api/updateStudent/`,
+        `${baseURL}/api/updateStudent`,
         form, // 2️⃣ This is the form data
         {
           params: { id: id }, // 3️⃣ This is query parameter (?id=...)

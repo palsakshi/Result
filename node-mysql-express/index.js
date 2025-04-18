@@ -16,16 +16,16 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api', require('./routes/studentDetails'));
 app.use('/api', require('./routes/userRoutes'));
 
-app.use(express.static(path.join(__dirname, 'student-login', 'dist')));
+// app.use(express.static(path.join(__dirname, 'student-login', 'dist')));
 
 // ✅ Required for Render health check
 app.get('/', (req, res) => {
   res.send('✅ Server is running!');
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'student-login', 'dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'student-login', 'dist', 'index.html'));
+// });
 
 
 app.listen(PORT, '0.0.0.0', async () => {
