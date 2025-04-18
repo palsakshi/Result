@@ -139,7 +139,7 @@ const StudentList = () => {
             onChange={handleInputChange}
             style={{ width: "40%" }}
           />
-          /
+    
           <input
             type="number"
             name="totalMarks"
