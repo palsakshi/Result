@@ -39,25 +39,25 @@ console.log(student);
           />
 </div>
           <table className="table table-bordered table-striped mt-3">
-            <tbody className="text-start">
-              <tr><td>College/Institute Name:</td><td>{student.collegeName}</td></tr>
-              <tr><td>Registration No.</td><td>{student.registrationNo}</td></tr>
-              <tr><td>Roll No.</td><td>{student.rollNo}</td></tr>
-              <tr><td>Name of Candidate:</td><td>{student.candidateName}</td></tr>
-              <tr><td>Father's Name:</td><td>{student.fatherName}</td></tr>
-              <tr><td>Mother's Name:</td><td>{student.motherName}</td></tr>
-              <tr><td>Course:</td><td>{student.course}</td></tr>
-              <tr><td>Date of Birth:</td><td>{student.dob}</td></tr>
-              <tr><td>Total Marks:</td><td>{student.totalMarks}</td></tr>
-              <tr><td>Marks Obtained:</td><td>{student.marksObtained}</td></tr>
-              <tr><td>Session:</td><td>{student.session}</td></tr>
+            <tbody className="text-start ">
+              <tr><td className="fw-bold">College/Institute Name:</td><td>{student.collegeName}</td></tr>
+              <tr><td className="fw-bold">Registration No.</td><td>{student.registrationNo}</td></tr>
+              <tr><td className="fw-bold">Roll No.</td><td>{student.rollNo}</td></tr>
+              <tr><td className="fw-bold">Name of Candidate:</td><td>{student.candidateName}</td></tr>
+              <tr><td className="fw-bold">Father's Name:</td><td>{student.fatherName}</td></tr>
+              <tr><td className="fw-bold">Mother's Name:</td><td>{student.motherName}</td></tr>
+              <tr><td className="fw-bold">Course:</td><td>{student.course}</td></tr>
+              <tr><td className="fw-bold">Date of Birth:</td><td>{student.dob}</td></tr>
+              <tr><td className="fw-bold">Total Marks:</td><td>{student.totalMarks}</td></tr>
+              <tr><td className="fw-bold">Marks Obtained:</td><td>{student.marksObtained}</td></tr>
+              <tr><td className="fw-bold">Session:</td><td>{student.session}</td></tr>
             </tbody>
           </table>
 
           {/* Marksheet Download Section */}
           <div className="container mt-4 mb-4">
             <div className="card">
-              <div className="card-header bg-white text-primary fw-bold">
+              <div className="card-header bg-white  fw-bold">
                 Download Marksheets
               </div>
               <div className="card-body p-0">
@@ -66,7 +66,7 @@ console.log(student);
                     {student.documents && student.documents.length > 0 ? (
                       student.documents.map((doc, index) => (
                         <tr key={index}>
-                          <td>Marksheet {index + 1}</td>
+                          <td className="fw-bold">Marksheet {index + 1}</td>
                           <td>
                             <a
                               href={`${baseURL}/uploads/${doc.filePath}`}

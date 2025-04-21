@@ -1,6 +1,6 @@
 // import axios from "axios";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState , Link} from "react";
 import { useNavigate } from "react-router-dom";
 import myLogo from "../../assets/img/logo.jpg";
 import baseURL from "../../baseURL";
@@ -50,7 +50,6 @@ const Search = () => {
 
         <div className="filed">
           <h2>Results</h2>
-
           <table className="table table-bordered color">
             <tbody>
               <tr>

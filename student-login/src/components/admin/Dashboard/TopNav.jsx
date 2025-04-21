@@ -1,8 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
+
 
 
 const Navbar = () => {
+  const Navigate = useNavigate();
+const handleLogout = () => {
+  // Clear any auth data (if you're using localStorage/sessionStorage)
+  localStorage.removeItem("adminToken");
+  Navigate("/login"); };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -24,10 +30,15 @@ const Navbar = () => {
 
         {/* Collapsible wrapper */}
         <div className="d-flex ms-3 gap-2">
- 
+       
         <Link to="/dashboard/AddResult" className="btn btn-success">
             Add
           </Link>
+          <button
+            onClick={handleLogout}
+            className=" btn btn-info border-3 text-start " >
+            Logout
+          </button>
 </div>
       </div>
     </nav>
