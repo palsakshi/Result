@@ -19,7 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'Admin'  // ✅ Already correct
     }
-  });
+  },
+  {
+    sequelize,
+    modelName: 'UserLogin',
+    tableName: 'UserLogin', 
+  }
+);
 
   return UserLogin;
 };
