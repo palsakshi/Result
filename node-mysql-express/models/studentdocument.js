@@ -3,16 +3,16 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class studentdocuments extends Model {
+  class student_documents extends Model {
     static associate(models) {
-      studentdocuments.belongsTo(models.student_details, {
+      student_documents.belongsTo(models.student_details, {
         foreignKey: 'registrationNo',
         targetKey: 'registrationNo',
         as: 'student'
       });
     }
   }
-  studentdocuments.init({
+  student_documents.init({
     registrationNo: {
       type: DataTypes.STRING,
       allowNull: false
@@ -26,5 +26,5 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'student_documents',
     tableName: 'student_documents',
   });
-  return studentdocuments;
+  return student_documents;
 };

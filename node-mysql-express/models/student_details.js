@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
        // ✅ One student has many documents
-       student_details.hasMany(models.studentdocuments, {
+       student_details.hasMany(models.student_documents, {
         foreignKey: 'registrationNo',
         sourceKey: 'registrationNo',
         as: 'documents'
