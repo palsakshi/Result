@@ -37,6 +37,7 @@ function DashboardHome() {
         <Sidebar />
         <main className="p-4 w-100" style={{ overflowY: 'auto' }} >
         <Outlet />
+        
       </main>  
       </div>
     </div>

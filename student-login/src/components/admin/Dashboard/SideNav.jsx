@@ -3,10 +3,7 @@ import { Link , useNavigate} from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const handleLogout = () => {
-    // Clear any auth data (if you're using localStorage/sessionStorage)
-    localStorage.removeItem("adminToken");
-    navigate("/login"); };
+  
   return (
     <div  
       className="bg-dark text-white p-3"
@@ -29,14 +26,6 @@ const Sidebar = () => {
           <Link to="/dashboard/StudentList" className="nav-link text-white">
             Students List
           </Link>
-        </li>
-        <li className=""
-        style={{marginTop:"370px"}}>
-          <button
-            onClick={handleLogout}
-            className="nav-link text-white bg-primary border-0 text-start" >
-            Logout
-          </button>
         </li>
       </ul>
     </div>
