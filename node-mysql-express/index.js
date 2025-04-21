@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === 'production';
 
 const allowedOrigins = isProduction
-  ? ['https://resultstudents-git-main-sakshis-projects-fd2c56cf.vercel.app']
+  ? ['https://myresultapp.vercel.app']
   : ['http://localhost:5173'];
 
   app.use(cors({
