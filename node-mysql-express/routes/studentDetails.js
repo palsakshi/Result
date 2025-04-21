@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { student_details , studentdocuments} = require('../models');
+const { student_details , student_documents} = require('../models');
 const multer = require('multer');
 
 
@@ -65,7 +65,7 @@ async (req, res) => {
           filePath: doc.filename
         }));
   
-        await studentdocuments.bulkCreate(documentRecords);
+        await student_documents.bulkCreate(documentRecords);
       }
 
     res.status(201).json(student);
@@ -92,7 +92,7 @@ router.get('/get-single-student-info', async (req, res) => {
 
   const student = await student_details.findOne({ where: { registrationNo: regNo },
     include: [{
-      model: studentdocuments,
+      model: student_documents,
       as: 'documents' // this must match your association alias
     }]
 
