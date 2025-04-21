@@ -8,10 +8,23 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === 'production';
 
-app.use(cors({
-  origin: 'https://resultstudents-git-main-sakshis-projects-fd2c56cf.vercel.app',
-  credentials: true
-}));
+const allowedOrigins = isProduction
+  ? ['https://resultstudents-git-main-sakshis-projects-fd2c56cf.vercel.app']
+  : ['http://localhost:5173'];
+
+  app.use(cors({
+    origin: function (origin, callback) {
+      console.log('🌐 Incoming origin:', origin);
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        // console.log('❌ Blocked by CORS:', origin);
+        callback(new Error('❌ Not allowed by CORS'));
+      }
+    },
+    credentials: true
+  }));
+
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
@@ -19,16 +32,13 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api', require('./routes/studentDetails'));
 app.use('/api', require('./routes/userRoutes'));
 
-// app.use(express.static(path.join(__dirname, 'student-login', 'dist')));
 
 // ✅ Required for Render health check
 app.get('/', (req, res) => {
   res.send('✅ Server is running!');
 });
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'student-login', 'dist', 'index.html'));
-// });
+
 
 
 app.listen(PORT, '0.0.0.0', async () => {

@@ -2,18 +2,13 @@ import React from "react";
 import { Link , useNavigate} from "react-router-dom";
 
 const Sidebar = () => {
-
   const navigate = useNavigate();
-
   const handleLogout = () => {
     // Clear any auth data (if you're using localStorage/sessionStorage)
-    localStorage.removeItem("adminToken"); // or whatever you stored
-    // Optionally clear more, like user info
-    // Redirect to login page
-    navigate("/login");
-  };
+    localStorage.removeItem("adminToken");
+    navigate("/login"); };
   return (
-    <div
+    <div  
       className="bg-dark text-white p-3"
       style={{ width: "250px", minHeight: "100vh" }}
     >

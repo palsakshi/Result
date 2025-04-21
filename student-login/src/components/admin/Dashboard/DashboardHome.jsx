@@ -7,9 +7,7 @@ import { Outlet, useNavigate} from 'react-router-dom';
 import baseURL from '../../../baseURL';
 
 function DashboardHome() {
-  const navigate= useNavigate();
-  
-
+  const navigate = useNavigate(); 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('token'));
     if (!token) {
@@ -17,12 +15,10 @@ function DashboardHome() {
     } else {
       axios.get(`${baseURL}/api/dashboard`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`}
       })
       .then(res => {
         console.log('User info:', res.data.user);
-        
       })
       .catch(err => {
         if (err?.response?.data?.error === "Token expired") {
@@ -35,7 +31,7 @@ function DashboardHome() {
   }, []);
 
   return (
-    <div  style={{ height: '100vh', overflow: 'hidden' }}>
+    <div style={{ height: '100vh', overflow: 'hidden' }}>
       <Navbar/>
       <div className="d-flex" style={{ height: 'calc(100vh - 56px)' }}>
         <Sidebar />

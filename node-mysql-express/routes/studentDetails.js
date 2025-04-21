@@ -78,6 +78,7 @@ async (req, res) => {
 router.get('/allStudents', async (req, res) => {
   try {
     const students = await student_details.findAll();
+    // console.log( students)
     res.status(200).json(students);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -147,10 +148,7 @@ router.put('/updateStudent',
 // ❌ Delete a student by ID
 router.delete('/deleteStudent', async (req, res) => {
   try {
-    // const {id} = res.query; 
-   
     const student = await student_details.findByPk(req.query.id);
-    
     if (!student) return res.status(404).json({ error: 'Student not found' });
 
     await student.destroy();
