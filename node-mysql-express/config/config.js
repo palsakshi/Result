@@ -17,10 +17,10 @@ module.exports = {
   },
   production: {
     username: 'root',
-    password: 'rfoSVVtZvElZPrlhELoUALyDyywFtvhN',
+    password: 'YDrDcXIwcUUXahaDtUCFBMCxVziAyHWY',
     database: 'railway',
-    host: 'switchyard.proxy.rlwy.net',
-    port: 59645,
+    host: 'caboose.proxy.rlwy.net',
+    port: 27117,
     dialect: 'mysql'
   }
 };
