@@ -6,7 +6,8 @@ module.exports = {
     password: "",
     database: "students",
     host: "127.0.0.1",
-    dialect: "mysql"
+    dialect: "mysql",
+    
   },
   test: {
     username: "root",
