@@ -13,7 +13,7 @@ const handleLogout = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         {/* Navbar brand */}
-        <Link className="navbar-brand">Navbar</Link>
+        <Link className="navbar-brand" style={{paddingLeft:50}}>Navbar</Link>
 
         {/* Toggle button */}
         <button

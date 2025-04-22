@@ -24,8 +24,8 @@ function Login() {
       console.log('Login success:', res.data);
       localStorage.setItem("token", JSON.stringify(res.data.token));
 
-      alert('Login successful!');
-      navigate('/dashboard');
+      // alert('Login successful!');
+      navigate('/dashboard/Record');
     } catch (error) {
       console.error('Login failed:', error);
       alert(`Login failed: ${error?.response?.data?.error || 'Something went wrong'}`);

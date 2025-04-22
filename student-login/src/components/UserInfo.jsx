@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import myLogo from "../assets/img/logo.jpg";
  import baseURL from "../baseURL";
+ import  "./userInfo.css"
 const UserInfo = () => {
   const [student, setStudent] = useState(null);
 
@@ -39,7 +40,7 @@ console.log(student);
           />
 </div>
           <table className="table table-bordered table-striped mt-3">
-            <tbody className="text-start ">
+            <tbody className="text-start text-dark-color " >
               <tr><td className="fw-bold">College/Institute Name:</td><td>{student.collegeName}</td></tr>
               <tr><td className="fw-bold">Registration No.</td><td>{student.registrationNo}</td></tr>
               <tr><td className="fw-bold">Roll No.</td><td>{student.rollNo}</td></tr>
@@ -70,7 +71,7 @@ console.log(student);
                           <td>
                             <a
                               href={`${baseURL}/uploads/${doc.filePath}`}
-                              className="text-primary fw-semibold"
+                              className=" fw-semibold"
                               download
                               target="_blank"
                               rel="noopener noreferrer"

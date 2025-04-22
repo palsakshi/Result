@@ -3,7 +3,8 @@ import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import baseURL from '../../../baseURL';
 import { useNavigate } from 'react-router-dom';
-
+import { MdDelete } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
@@ -170,8 +171,8 @@ const StudentList = () => {
         </>
       ) : (
         <>
-          <button className="btn btn-sm btn-primary me-2" onClick={() => handleEditClick(row)}>Edit</button>
-          <button className="btn btn-sm btn-danger" onClick={() => deleteStudent(row.id)}>Delete</button>
+          <button className="btn btn-sm btn-primary me-2" onClick={() => handleEditClick(row)}><MdModeEditOutline /></button>
+          <button className="btn btn-sm btn-danger" onClick={() => deleteStudent(row.id)}>< MdDelete /></button>
         </>
       )
     }

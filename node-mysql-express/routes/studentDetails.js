@@ -84,12 +84,25 @@ router.get('/allStudents', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// get record
+router.get('/record', async( req, res)=>{
+try{
+  const Student = await student_details.count();
+  // console.log(" record", Student )
+  res.status(200).json( Student );
+}
+catch (err) {
+  res.status(500).json({ error: err.message });
+}
+  
+});
 
+//get student-info
 router.get('/get-single-student-info', async (req, res) => {
 
  
   const { regNo } = req.query;
-
+console.log("registration",regNo);
   const student = await student_details.findOne({ where: { registrationNo: regNo },
     include: [{
       model: student_documents,

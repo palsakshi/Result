@@ -11,15 +11,17 @@ import Dashboard from "./components/admin/Dashboard/DashboardHome";
 import StudentList from "./components/admin/Dashboard/studentList"; 
 import EditStudent  from "./components/admin/Dashboard/editStudent";
 import StudentForm from "./components/admin/Dashboard/StudentForms";
-
+import  Record from "./components/admin/Dashboard/count";
 function AppWrapper() {
   return (
     <>
      
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} >
+        <Route path="Record" element={< Record/>}/>
         <Route path="AddResult" element={<StudentForm />} />
         <Route path="StudentList" element={<StudentList/>}/>
+
         </Route>
         <Route path="/editStudent"  element={<EditStudent/>} />
         <Route path="/login" element={<Login />} />
